@@ -1,0 +1,14 @@
+
+plugins {
+    id 'java'
+}
+
+subprojects {
+    group = 'com.leviosa.pumpkin'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = 13
+}
+
+repositories {}
+
+dependencies {}
