@@ -3,6 +3,9 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id 'war'
+	id "io.freefair.lombok" version "6.0.0-m2"
+	id 'nu.studer.jooq' version '5.2.1'
+	//id 'org.flywaydb.flyway' version '6.5.6'
 }
 
 group = 'com.leviosa.pumpkin'
@@ -17,17 +20,15 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation group: 'org.jooq', name: 'jooq', version: '3.14.11'
+    jooqGenerator 'mysql:mysql-connector-java:8.0.18'
+	//implementation group: 'org.flywaydb', name: 'flyway-core', version: '7.10.0'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
+    implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jooq', version: '2.5.2'
 }
-
-/* sourceSets {
-  main {
-    java {
-      include 'src/**'
-    }
-  }
-} */
 
 test {
 	useJUnitPlatform()
@@ -36,5 +37,49 @@ test {
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:Hoxton.RC1"
+    }
+}
+
+/* flyway {
+	url = 'jdbc:mysql://localhost:3306/links_storage?serverTimezone=UTC'
+	user = 'root'
+	password = 'root'
+	locations = ["filesystem:$project.projectDir/src/main/resources/db/migration"]
+} */
+
+jooq {
+    configurations {
+        main {
+            generationTool {
+                logging = org.jooq.meta.jaxb.Logging.WARN
+                jdbc {
+                    driver = 'com.mysql.cj.jdbc.Driver'
+                    url = 'jdbc:mysql://localhost:3306/links_storage?serverTimezone=UTC'
+                    user = 'root'
+                    password = 'root'
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        name = 'org.jooq.meta.mysql.MySQLDatabase'
+                        inputSchema = 'links_storage'
+                        includes = '.*'
+                        excludes = ''
+                    }
+                    target {
+            			packageName = 'com.leviosa.pumpkin.db.gen'
+                        directory = 'src/main/generated/'
+                    }
+                }
+            }
+        }
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', 'src/main/generated/jooq']
+        }
     }
 }
