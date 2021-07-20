@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class Tag {
     @Column(name = "tag_id")
-    private int id;
+    private long id;
     @Column(name = "user_id")
     private int userId;
     @Column(name = "name")
