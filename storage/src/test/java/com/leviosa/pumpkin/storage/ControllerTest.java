@@ -7,7 +7,10 @@ import java.io.IOException;
 
 import com.leviosa.pumpkin.storage.controller.Controller;
 import com.leviosa.pumpkin.storage.domain.Tag;
+import com.leviosa.pumpkin.storage.facade.LinksFacade;
+import com.leviosa.pumpkin.storage.facade.TagsFacade;
 import com.leviosa.pumpkin.storage.repository.LinksRepository;
+import com.leviosa.pumpkin.storage.repository.LinksTagsRepository;
 import com.leviosa.pumpkin.storage.repository.TagsRepository;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -39,6 +42,12 @@ public class ControllerTest {
     private TagsRepository tagsRepository;
     @MockBean
     private LinksRepository linksRepository;
+    @MockBean
+    private LinksTagsRepository linksTagsRepository;
+    @MockBean
+    private TagsFacade tagsFacade;
+    @MockBean
+    private LinksFacade linksFacade;
 
     @Test
 	public void testPostTag() throws IOException, Exception {
@@ -58,7 +67,7 @@ public class ControllerTest {
     public void testGetTag() throws Exception {
         long id = 1;
         Tag expectedResponse = new Tag(id, 2, "test");
-        given(tagsRepository.getTag(id)).willReturn(expectedResponse);
+        given(tagsFacade.getTag(id)).willReturn(expectedResponse);
 
         MockHttpServletResponse response = mvc.perform(
                 MockMvcRequestBuilders.get("/storage/tags/1")

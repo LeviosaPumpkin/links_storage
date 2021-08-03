@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.leviosa.pumpkin.storage.domain.Link;
 import com.leviosa.pumpkin.storage.domain.Tag;
-import com.leviosa.pumpkin.storage.repository.LinksRepository;
+import com.leviosa.pumpkin.storage.facade.LinksFacade;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
@@ -13,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class LinksRepositoryTest {
+public class LinksFacadeTest {
     @Autowired
-    private LinksRepository linksRepository;
+    private LinksFacade linksFacade;
 
     @Test
     public void testCreateUpdateLink() {
@@ -28,10 +28,10 @@ public class LinksRepositoryTest {
                 new Tag(1, userId, "fashion"),
                 new Tag(2, userId, "food")
             )); 
-        long id = linksRepository.create(link);
+        long id = linksFacade.create(link);
         link.setId(id);
 
-        List<Link> links = linksRepository.getLinksById(id);
+        List<Link> links = linksFacade.getLinksById(id);
         Assert.assertEquals(1, links.size());
         Link linkFromDb = links.get(0);
         Assert.assertEquals(link, linkFromDb);
@@ -39,9 +39,9 @@ public class LinksRepositoryTest {
         link.setLink(RandomStringUtils.randomAlphabetic(6));
         link.setDescription(RandomStringUtils.randomAlphabetic(10));
         link.getTags().set(1, new Tag(3, userId, "sport"));
-        linksRepository.update(link);
+        linksFacade.update(link);
 
-        links = linksRepository.getLinksById(id);
+        links = linksFacade.getLinksById(id);
         Assert.assertEquals(1, links.size());
         linkFromDb = links.get(0);
         Assert.assertEquals(link, linkFromDb);

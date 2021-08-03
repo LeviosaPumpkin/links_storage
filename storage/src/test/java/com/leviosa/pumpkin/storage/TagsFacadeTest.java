@@ -1,6 +1,7 @@
 package com.leviosa.pumpkin.storage;
 
 import com.leviosa.pumpkin.storage.domain.Tag;
+import com.leviosa.pumpkin.storage.facade.TagsFacade;
 import com.leviosa.pumpkin.storage.repository.TagsRepository;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -10,21 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class TagsRepostoryTest {
+public class TagsFacadeTest {
     @Autowired
-    private TagsRepository tagsRepository;
+    private TagsFacade tagsFacade;
 
     @Test
     public void testCreateUpdateTag() {
         Tag tag = new Tag (1, RandomStringUtils.randomAlphabetic(6));
-        long id = tagsRepository.create(tag);
+        long id = tagsFacade.create(tag);
         tag.setId(id);
 
-        Assert.assertEquals(tag, tagsRepository.getTag(id));
+        Assert.assertEquals(tag, tagsFacade.getTag(id));
 
         tag.setName(RandomStringUtils.randomAlphabetic(6));
-        tagsRepository.update(tag);
+        tagsFacade.update(tag);
 
-        Assert.assertEquals(tag, tagsRepository.getTag(id));
+        Assert.assertEquals(tag, tagsFacade.getTag(id));
     }
 }
