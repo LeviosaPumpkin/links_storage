@@ -1,9 +1,5 @@
 package com.leviosa.pumpkin.storage.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,8 +10,8 @@ import com.leviosa.pumpkin.storage.domain.Link;
 import com.leviosa.pumpkin.storage.domain.Tag;
 
 import org.jooq.DSLContext;
-import org.jooq.Result;
-import org.jooq.Table;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class LinksRepository {
@@ -53,7 +49,7 @@ public class LinksRepository {
         return fetchLinks(linkRecords);
     }
 
-    public void create(Link link) {
+    public long create(Link link) {
         long id = context.insertInto(Tables.LINKS, Tables.LINKS.LINK_NAME, Tables.LINKS.DESCRIPTION, Tables.LINKS.USER_ID) 
             .values(link.getLink(), link.getDescription(), link.getUserId())
             .returningResult(Tables.LINKS.LINK_ID)
@@ -65,6 +61,8 @@ public class LinksRepository {
                 .values(id, tag.getId())
                 .execute();
         });
+
+        return id;
     }
 
     public void update(Link link) {

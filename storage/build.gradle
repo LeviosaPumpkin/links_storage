@@ -5,7 +5,6 @@ plugins {
 	id 'war'
 	id "io.freefair.lombok" version "6.0.0-m2"
 	id 'nu.studer.jooq' version '5.2.1'
-	//id 'org.flywaydb.flyway' version '6.5.6'
 }
 
 group = 'com.leviosa.pumpkin'
@@ -22,12 +21,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'org.jooq', name: 'jooq', version: '3.14.11'
     jooqGenerator 'mysql:mysql-connector-java:8.0.18'
-	//implementation group: 'org.flywaydb', name: 'flyway-core', version: '7.10.0'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
     implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jooq', version: '2.5.2'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+    testAnnotationProcessor "org.projectlombok:lombok:1.18.6"
 }
 
 test {
@@ -39,13 +39,6 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:Hoxton.RC1"
     }
 }
-
-/* flyway {
-	url = 'jdbc:mysql://localhost:3306/links_storage?serverTimezone=UTC'
-	user = 'root'
-	password = 'root'
-	locations = ["filesystem:$project.projectDir/src/main/resources/db/migration"]
-} */
 
 jooq {
     configurations {

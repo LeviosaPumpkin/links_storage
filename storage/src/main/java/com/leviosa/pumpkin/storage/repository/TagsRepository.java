@@ -15,10 +15,10 @@ public class TagsRepository {
     @Autowired
     DSLContext context;
 
-    public Tag getTag(int id) {
+    public Tag getTag(long id) {
         return context
         .selectFrom(Tables.TAGS)
-        .where(Tables.TAGS.TAG_ID.eq(1L))
+        .where(Tables.TAGS.TAG_ID.eq(id))
         .fetchAny()
         .into(Tag.class);
     }
@@ -33,10 +33,12 @@ public class TagsRepository {
             .into(Tag.class);
     }
 
-    public void create(Tag tag) {
-        context.insertInto(Tables.TAGS, Tables.TAGS.USER_ID, Tables.TAGS.NAME)
+    public long create(Tag tag) {
+        return context.insertInto(Tables.TAGS, Tables.TAGS.USER_ID, Tables.TAGS.NAME)
             .values(tag.getUserId(), tag.getName())
-            .execute();
+            .returningResult(Tables.TAGS.TAG_ID)
+            .fetchOne()
+            .getValue(Tables.TAGS.TAG_ID);
     }
 
     public void update(Tag tag) {

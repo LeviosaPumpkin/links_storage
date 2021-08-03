@@ -3,7 +3,6 @@ package com.leviosa.pumpkin.storage.controller;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.Map;
 
 import com.leviosa.pumpkin.storage.domain.Link;
 import com.leviosa.pumpkin.storage.domain.Tag;
@@ -58,7 +57,7 @@ public class Controller {
     }
 
     @GetMapping(value="/tags/{tagId}")
-    public Tag getTag(@PathVariable("tagId") int tagId) {
+    public Tag getTag(@PathVariable("tagId") long tagId) {
         return tagsRepository.getTag(tagId);
     }  
     
