@@ -1,2 +1,3 @@
 rootProject.name = 'link_storage'
 include 'storage'
+include 'gateway'

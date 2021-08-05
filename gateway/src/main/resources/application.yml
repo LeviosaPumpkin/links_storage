@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+zuul:
+  prefix: /links
+  routes:
+    storage:
+      path: /storage/**
+      url: http://127.0.0.1:8081
