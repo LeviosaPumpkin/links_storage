@@ -2,10 +2,10 @@ plugins {
 	id 'org.springframework.boot' version '2.3.3.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
+	id "io.freefair.lombok" version "5.3.0"
 }
 
-sourceCompatibility = '13'
-group = 'com.leviosa.pumpkin'
+jar.enabled=true
 
 repositories {
 	mavenCentral()
@@ -13,11 +13,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-zuul'
-	implementation 'org.glassfish.jaxb:jaxb-runtime'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-security', version: '2.2.5.RELEASE'
-	//implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '3.0.3'
-	implementation project(':jwt-common')
+	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 }
 
 dependencyManagement {

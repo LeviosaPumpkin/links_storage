@@ -2,8 +2,14 @@ server:
   port: 8080
 
 zuul:
-  prefix: /links
   routes:
     storage:
-      path: /storage/**
+      path: /links/**
       url: http://127.0.0.1:8081
+    authentification-service:
+      path: /login/**
+      url: http://127.0.0.1:8082
+      sensitiveHeaders: Cookie,Set-Cookie
+      stripPrefix: false
+
+shuaicj.security.jwt.secret: otherpeopledontknowit

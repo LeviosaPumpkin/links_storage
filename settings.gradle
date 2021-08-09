@@ -1,3 +1,5 @@
 rootProject.name = 'link_storage'
+include 'jwt-common'
 include 'storage'
 include 'gateway'
+include 'authentification-service'

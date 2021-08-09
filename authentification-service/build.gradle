@@ -4,19 +4,16 @@ plugins {
 	id 'java'
 }
 
-sourceCompatibility = '13'
-group = 'com.leviosa.pumpkin'
-
 repositories {
 	mavenCentral()
 	maven { url 'https://repo.spring.io/milestone' }
 }
 
 dependencies {
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-zuul'
-	implementation 'org.glassfish.jaxb:jaxb-runtime'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-security', version: '2.2.5.RELEASE'
-	//implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '3.0.3'
+	implementation 'org.glassfish.jaxb:jaxb-runtime'
+
 	implementation project(':jwt-common')
 }
 
